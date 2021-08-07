@@ -513,17 +513,41 @@ main(argc, argv)
 						//compute current addr
 						inaddr = current-mem;
 						off_t ltmp;
-						sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
+						if (cmdstr[1] == 'x') {
+							// We have a hex address
+							sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
+						} else {
+							// We have a decimal address
+							sscanf(cmdstr+1, "%llu", (long long unsigned *)&ltmp);
+						}
 						inaddr += ltmp;
 					} else if (cmdstr[0] == '-') {
 						//compute current addr
 						inaddr = current-mem;
 						off_t ltmp;
+						if (cmdstr[1] == 'x') {
+							// We have a hex address
+							sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
+						} else {
+							// We have a decimal address
+							sscanf(cmdstr+1, "%llu", (long long unsigned *)&ltmp);
+						}
 						sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
-						inaddr -= ltmp;
+						// Check we don't underrun
+						if (ltmp > inaddr) {
+							inaddr = 0;
+						} else {
+							inaddr -= ltmp;
+						}
 					} else {
 						off_t ltmp;
-						sscanf(cmdstr, "%llx", (long long unsigned *)&ltmp);
+						if (cmdstr[1] == 'x') {
+							// We have a hex address
+							sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
+						} else {
+							// We have a decimal address
+							sscanf(cmdstr+1, "%llu", (long long unsigned *)&ltmp);
+						}
 						inaddr = ltmp;
 					}
 					if (inaddr < P(P_OF)) break;
