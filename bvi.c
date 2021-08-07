@@ -509,6 +509,18 @@ main(argc, argv)
 						inaddr = P(P_OF);
 					} else if (cmdstr[0] == '$') {
 						inaddr = filesize + P(P_OF) - 1L;
+					} else if (cmdstr[0] == '+') {
+						//compute current addr
+						inaddr = current-mem;
+						off_t ltmp;
+						sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
+						inaddr += ltmp;
+					} else if (cmdstr[0] == '-') {
+						//compute current addr
+						inaddr = current-mem;
+						off_t ltmp;
+						sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
+						inaddr -= ltmp;
 					} else {
 						off_t ltmp;
 						sscanf(cmdstr, "%llx", (long long unsigned *)&ltmp);
