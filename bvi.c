@@ -501,7 +501,7 @@ main(argc, argv)
 					break;
 		case 'g':	last_motion = current;
 					clearstr();
-					outmsg("Goto Hex Address:");
+					outmsg("Goto Address:");
 					refresh();
 					getcmdstr(cmdstr, 18);
 					clearstr();
@@ -515,7 +515,7 @@ main(argc, argv)
 						off_t ltmp;
 						if (cmdstr[1] == 'x') {
 							// We have a hex address
-							sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
+							sscanf(cmdstr+2, "%llx", (long long unsigned *)&ltmp);
 						} else {
 							// We have a decimal address
 							sscanf(cmdstr+1, "%llu", (long long unsigned *)&ltmp);
@@ -527,12 +527,11 @@ main(argc, argv)
 						off_t ltmp;
 						if (cmdstr[1] == 'x') {
 							// We have a hex address
-							sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
+							sscanf(cmdstr+2, "%llx", (long long unsigned *)&ltmp);
 						} else {
 							// We have a decimal address
 							sscanf(cmdstr+1, "%llu", (long long unsigned *)&ltmp);
 						}
-						sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
 						// Check we don't underrun
 						if (ltmp > inaddr) {
 							inaddr = 0;
@@ -541,12 +540,12 @@ main(argc, argv)
 						}
 					} else {
 						off_t ltmp;
-						if (cmdstr[1] == 'x') {
+						if (cmdstr[0] == 'x') {
 							// We have a hex address
 							sscanf(cmdstr+1, "%llx", (long long unsigned *)&ltmp);
 						} else {
 							// We have a decimal address
-							sscanf(cmdstr+1, "%llu", (long long unsigned *)&ltmp);
+							sscanf(cmdstr, "%llu", (long long unsigned *)&ltmp);
 						}
 						inaddr = ltmp;
 					}
